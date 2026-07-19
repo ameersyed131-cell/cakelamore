@@ -1,0 +1,425 @@
+/* ===================================================================
+   CAKE L'AMORE — shared stylesheet
+   Design language: French patisserie, soft pastel, restrained motion
+=================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Parisienne&family=Jost:wght@300;400;500;600&display=swap');
+
+:root{
+  --cream:        #FCF4F0;
+  --cream-deep:    #F6E8E2;
+  --rose:          #C77B8C;
+  --rose-soft:     #E9C7CE;
+  --wine:          #7A2E3D;
+  --wine-deep:     #5C2130;
+  --ink:           #3A2A2E;
+  --gold:          #C9A15D;
+  --sage:          #A8B89A;
+  --white:         #FFFDFB;
+
+  --display: 'Cormorant Garamond', serif;
+  --script:  'Parisienne', cursive;
+  --body:    'Jost', sans-serif;
+
+  --max: 1180px;
+  --radius: 4px;
+  --ease: cubic-bezier(.4,.05,.2,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--body);
+  font-weight:300;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+h1,h2,h3,h4{
+  font-family:var(--display);
+  font-weight:600;
+  color:var(--wine-deep);
+  margin:0 0 .5em;
+  letter-spacing:.01em;
+}
+h1{ font-size:clamp(2.6rem,6vw,4.6rem); font-weight:600; line-height:1.08; }
+h2{ font-size:clamp(1.9rem,4vw,2.8rem); line-height:1.15; }
+h3{ font-size:clamp(1.3rem,2.4vw,1.6rem); line-height:1.25; }
+p{ margin:0 0 1em; }
+.container{ max-width:var(--max); margin:0 auto; padding:0 28px; }
+
+::selection{ background:var(--rose-soft); color:var(--wine-deep); }
+:focus-visible{ outline:2px solid var(--wine); outline-offset:3px; }
+
+/* ---------- eyebrow / script label ---------- */
+.eyebrow{
+  font-family:var(--script);
+  font-size:1.6rem;
+  color:var(--rose);
+  display:inline-block;
+  margin-bottom:.15em;
+}
+
+/* ---------- loader ---------- */
+#loader{
+  position:fixed; inset:0; z-index:999;
+  background:var(--cream);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity .6s var(--ease), visibility .6s var(--ease);
+}
+#loader svg{ width:220px; height:auto; }
+#loader path{
+  fill:none; stroke:var(--gold); stroke-width:2;
+  stroke-dasharray:600; stroke-dashoffset:600;
+  animation:draw 1.1s var(--ease) forwards;
+}
+@keyframes draw{ to{ stroke-dashoffset:0; } }
+#loader.hide{ opacity:0; visibility:hidden; }
+@media (prefers-reduced-motion:reduce){
+  #loader{ display:none !important; }
+}
+
+/* ---------- header ---------- */
+header.site{
+  position:sticky; top:0; z-index:100;
+  background:rgba(252,244,240,.92);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(122,46,61,.1);
+}
+.nav-inner{
+  max-width:var(--max); margin:0 auto; padding:16px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.wordmark{
+  font-family:var(--script);
+  font-size:2rem;
+  color:var(--wine-deep);
+  line-height:1;
+}
+.wordmark span{ color:var(--rose); }
+nav.links{ display:flex; gap:34px; align-items:center; }
+nav.links a{
+  font-size:.86rem; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--ink); position:relative; padding-bottom:4px;
+}
+nav.links a::after{
+  content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+  background:var(--rose); transition:width .35s var(--ease);
+}
+nav.links a:hover::after, nav.links a.active::after{ width:100%; }
+nav.links a.active{ color:var(--wine); }
+.btn{
+  display:inline-block; padding:12px 28px;
+  font-family:var(--body); font-size:.82rem; letter-spacing:.08em; text-transform:uppercase;
+  border:1.5px solid var(--wine); border-radius:100px;
+  color:var(--wine); position:relative; overflow:hidden;
+  transition:color .4s var(--ease);
+}
+.btn::before{
+  content:''; position:absolute; inset:0; background:var(--wine);
+  transform:scaleX(0); transform-origin:left; transition:transform .4s var(--ease); z-index:-1;
+}
+.btn:hover{ color:var(--white); }
+.btn:hover::before{ transform:scaleX(1); }
+.btn.solid{ background:var(--wine); color:var(--white); }
+.btn.solid::before{ background:var(--wine-deep); }
+.btn.gold{ border-color:var(--gold); color:var(--wine-deep); }
+.btn.gold::before{ background:var(--gold); }
+.btn.gold:hover{ color:var(--wine-deep); }
+
+.hamburger{ display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
+.hamburger span{ width:24px; height:1.5px; background:var(--ink); display:block; }
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:88vh; display:flex; align-items:center; position:relative;
+  background:linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
+  overflow:hidden;
+}
+.hero .container{ position:relative; z-index:2; text-align:center; }
+.hero .wordmark-hero{
+  font-family:var(--script); color:var(--wine-deep);
+  font-size:clamp(3rem,9vw,6.5rem); line-height:1.05;
+}
+.hero p.lede{
+  font-family:var(--display); font-style:italic; font-size:1.3rem;
+  color:var(--ink); max-width:520px; margin:18px auto 34px;
+}
+.hero-cta{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+.hero-blob{
+  position:absolute; border-radius:50%; filter:blur(60px); opacity:.35; z-index:1;
+}
+.hero-blob.a{ width:340px; height:340px; background:var(--rose-soft); top:-60px; left:-80px; }
+.hero-blob.b{ width:280px; height:280px; background:var(--sage); bottom:-80px; right:-60px; opacity:.25; }
+
+/* ---------- swirl divider (signature element) ---------- */
+.swirl{ display:flex; justify-content:center; margin:6px 0 10px; }
+.swirl svg{ width:180px; height:36px; overflow:visible; }
+.swirl path{
+  fill:none; stroke:var(--rose); stroke-width:2; stroke-linecap:round;
+  stroke-dasharray:400; stroke-dashoffset:400;
+  transition:stroke-dashoffset 1.1s var(--ease);
+}
+.swirl.in-view path{ stroke-dashoffset:0; }
+
+/* ---------- sections ---------- */
+section{ padding:88px 0; }
+.section-head{ text-align:center; max-width:640px; margin:0 auto 52px; }
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in-view{ opacity:1; transform:none; }
+
+/* ---------- cards / grid ---------- */
+.grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:36px; }
+.card{
+  position:relative; background:var(--white); border-radius:2px 2px 18px 18px;
+  padding-bottom:8px; box-shadow:0 10px 26px rgba(122,46,61,.07);
+  transition:transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.card::before{
+  content:''; position:absolute; top:-9px; left:0; right:0; height:18px;
+  background-image:radial-gradient(circle at 9px 9px, var(--white) 8.5px, transparent 9.5px);
+  background-size:18px 18px; background-repeat:repeat-x;
+}
+.card:hover{ transform:translateY(-8px); box-shadow:0 22px 40px rgba(122,46,61,.16); }
+.card .thumb{
+  height:200px; background:linear-gradient(135deg,var(--rose-soft),var(--cream-deep));
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--script); color:var(--wine); font-size:1.3rem; text-align:center; padding:10px;
+  overflow:hidden;
+}
+.card .thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
+.card:hover .thumb img{ transform:scale(1.08); }
+.card .body{ padding:20px 22px 22px; }
+.tag{
+  display:inline-block; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;
+  background:rgba(168,184,154,.25); color:#4b5c40; padding:4px 10px; border-radius:100px; margin-bottom:10px;
+}
+.price{ font-family:var(--display); font-weight:600; color:var(--wine); font-size:1.15rem; }
+
+/* ---------- footer ---------- */
+footer.site{ background:var(--wine-deep); color:var(--cream); padding:64px 0 28px; margin-top:60px; }
+footer.site .wordmark{ color:var(--cream); }
+footer.site .wordmark span{ color:var(--rose-soft); }
+.foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:36px; margin-bottom:44px; }
+.foot-grid h4{ color:var(--rose-soft); font-size:1.05rem; margin-bottom:14px; }
+.foot-grid a, .foot-grid p{ color:rgba(252,244,240,.75); font-size:.92rem; display:block; margin-bottom:9px; }
+.foot-grid a:hover{ color:var(--gold); }
+.foot-bottom{
+  border-top:1px solid rgba(252,244,240,.15); padding-top:22px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  font-size:.8rem; color:rgba(252,244,240,.55);
+}
+
+/* ---------- forms ---------- */
+.form-box{ background:var(--white); border-radius:4px; padding:40px; box-shadow:0 10px 30px rgba(122,46,61,.08); }
+label{ display:block; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--wine); margin:18px 0 6px; }
+label:first-child{ margin-top:0; }
+input, select, textarea{
+  width:100%; padding:13px 14px; font-family:var(--body); font-size:.95rem;
+  border:1px solid rgba(122,46,61,.2); border-radius:3px; background:var(--cream);
+  color:var(--ink); transition:border-color .3s var(--ease);
+}
+input:focus, select:focus, textarea:focus{ border-color:var(--rose); outline:none; }
+textarea{ resize:vertical; min-height:110px; }
+.form-note{ font-size:.82rem; color:rgba(58,42,46,.6); margin-top:16px; }
+
+/* ---------- timeline (Our Story) ---------- */
+.timeline{ position:relative; max-width:760px; margin:0 auto; }
+.timeline::before{ content:''; position:absolute; left:18px; top:0; bottom:0; width:1px; background:rgba(122,46,61,.2); }
+.t-item{ position:relative; padding-left:56px; margin-bottom:48px; }
+.t-item::before{
+  content:''; position:absolute; left:11px; top:4px; width:15px; height:15px; border-radius:50%;
+  background:var(--rose); border:3px solid var(--cream);
+  box-shadow:0 0 0 1px var(--rose);
+}
+.t-year{ font-family:var(--display); font-style:italic; color:var(--rose); font-size:1.1rem; }
+
+/* ---------- accordion (Policies) ---------- */
+.accordion-item{ border-bottom:1px solid rgba(122,46,61,.15); }
+.accordion-item h3{ margin:0; }
+.accordion-item button{
+  width:100%; text-align:left; background:none; border:none; cursor:pointer;
+  padding:26px 4px; display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--display); font-size:1.3rem; color:var(--wine-deep); font-weight:600;
+}
+.accordion-item .plus{ font-size:1.6rem; color:var(--rose); transition:transform .35s var(--ease); }
+.accordion-item.open .plus{ transform:rotate(45deg); }
+.accordion-body{ max-height:0; overflow:hidden; transition:max-height .5s var(--ease); }
+.accordion-body div{ padding:0 4px 26px; color:rgba(58,42,46,.85); font-size:.95rem; }
+.accordion-body ul{ padding-left:20px; }
+.accordion-body li{ margin-bottom:8px; }
+
+/* ---------- outlets ---------- */
+.outlet-card{
+  background:var(--white); border-radius:4px; padding:26px 28px; box-shadow:0 8px 22px rgba(122,46,61,.06);
+  display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:flex-start;
+}
+.outlet-card + .outlet-card{ margin-top:18px; }
+.outlet-card h3{ margin-bottom:6px; }
+.outlet-card .meta{ font-size:.88rem; color:rgba(58,42,46,.7); }
+.outlet-card .meta strong{ color:var(--wine); }
+
+/* ---------- order-partner cards ---------- */
+.partner-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+.partner-card{
+  background:var(--white); border-radius:4px; padding:36px 28px; text-align:center;
+  box-shadow:0 10px 26px rgba(122,46,61,.07); transition:transform .4s var(--ease);
+}
+.partner-card:hover{ transform:translateY(-6px); }
+.partner-card .icon{
+  width:58px; height:58px; margin:0 auto 18px; border-radius:50%;
+  background:var(--rose-soft); display:flex; align-items:center; justify-content:center;
+  font-family:var(--script); font-size:1.5rem; color:var(--wine-deep);
+}
+
+/* ---------- utility banners ---------- */
+.banner{
+  background:var(--rose-soft); border-radius:4px; padding:44px; text-align:center;
+  margin:70px auto 0; max-width:900px;
+}
+.banner h3{ margin-bottom:10px; }
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .grid{ grid-template-columns:repeat(2,1fr); }
+  .foot-grid{ grid-template-columns:1fr 1fr; }
+  .partner-grid{ grid-template-columns:1fr; }
+}
+@media (max-width:720px){
+  nav.links{
+    position:fixed; top:64px; left:0; right:0; background:var(--cream);
+    flex-direction:column; padding:24px 28px; gap:20px;
+    transform:translateY(-120%); transition:transform .4s var(--ease);
+    border-bottom:1px solid rgba(122,46,61,.1);
+  }
+  nav.links.open{ transform:translateY(0); }
+  .hamburger{ display:flex; }
+  .grid{ grid-template-columns:1fr; }
+  .foot-grid{ grid-template-columns:1fr 1fr; }
+  .outlet-card{ flex-direction:column; }
+}
+
+/* ===================================================================
+   MOBILE RESPONSIVENESS + READABILITY FIXES
+=================================================================== */
+
+/* Boost base readability on phones — scales every rem-based size site-wide */
+@media (max-width:640px){
+  html{ font-size:17px; }
+  section{ padding:56px 0; }
+  .hero{ min-height:auto; padding:110px 0 64px; }
+  .container{ padding:0 22px; }
+  .section-head{ margin-bottom:38px; }
+}
+@media (max-width:400px){
+  .container{ padding:0 18px; }
+}
+
+/* Force any inline two-column layout (hero/story image blocks, contact page)
+   to stack — picture above, text below, or vice versa, never side-by-side */
+@media (max-width:760px){
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:1fr 1.2fr"]{
+    grid-template-columns:1fr !important;
+    gap:26px !important;
+  }
+  /* shrink the fixed-height image/illustration blocks so they don't
+     dominate the screen once stacked on a narrow phone */
+  [style*="height:340px"],
+  [style*="height:320px"]{
+    height:220px !important;
+  }
+}
+
+/* Contact page + any split layout: make sure children never force
+   the row wider than the viewport (this was the "shifting width" bug) */
+@media (max-width:760px){
+  .container > [style*="grid-template-columns"],
+  section > .container [style*="grid-template-columns"]{
+    width:100%;
+    max-width:100%;
+  }
+  .form-box{ padding:28px 22px; }
+}
+
+/* Prevent any element from causing horizontal scroll/shift on mobile */
+@media (max-width:760px){
+  html, body{ overflow-x:hidden; }
+  img{ max-width:100%; height:auto; }
+  .card .thumb img{ height:100%; }
+}
+
+/* Touch-friendlier nav + slightly larger small print for on-phone reading */
+@media (max-width:720px){
+  nav.links a{ font-size:1rem; padding:6px 0; }
+  .foot-grid a, .foot-grid p{ font-size:1rem; }
+  .outlet-card .meta{ font-size:.95rem; }
+  .accordion-body div{ font-size:1rem; }
+}
+
+/* Card/description copy was set quite small (.88–.9rem) — bump for mobile legibility */
+@media (max-width:640px){
+  [style*="font-size:.88rem"],
+  [style*="font-size:.9rem"]{
+    font-size:1rem !important;
+    line-height:1.6 !important;
+  }
+}
+
+/* ===================================================================
+   READABILITY PASS — larger base type across ALL devices, not just mobile
+=================================================================== */
+
+/* Raise the root size so every rem-based element (headings, buttons,
+   paragraphs, nav, forms) reads larger everywhere — desktop and mobile */
+html{ font-size:17px; }
+
+/* Body copy line-height a touch more open for comfortable reading */
+body{ line-height:1.75; }
+p{ font-size:1.02rem; }
+
+/* Every small "meta/description" text baked in as inline styles across
+   cards, timeline, outlets, careers, policies — bump them all up together */
+[style*="font-size:.82rem"],
+[style*="font-size:.85rem"],
+[style*="font-size:.86rem"],
+[style*="font-size:.88rem"],
+[style*="font-size:.92rem"],
+[style*="font-size:.95rem"]{
+  font-size:1.05rem !important;
+  line-height:1.65 !important;
+}
+
+/* Card descriptions specifically (menu items, bestsellers) */
+.card .body p{ font-size:1.05rem; line-height:1.6; }
+.hero p.lede{ font-size:1.2rem; }
+.outlet-card .meta{ font-size:1rem; }
+.form-note{ font-size:.95rem; }
+.accordion-body div{ font-size:1.02rem; line-height:1.7; }
+.foot-grid a, .foot-grid p{ font-size:1rem; }
+
+/* Push it a little further still on phones, where reading distance is closer
+   and the earlier fix wasn't enough */
+@media (max-width:640px){
+  html{ font-size:18px; }
+  p{ font-size:1.05rem; }
+  .card .body p{ font-size:1.08rem; }
+  [style*="font-size:.82rem"],
+  [style*="font-size:.85rem"],
+  [style*="font-size:.86rem"],
+  [style*="font-size:.88rem"],
+  [style*="font-size:.92rem"],
+  [style*="font-size:.95rem"]{
+    font-size:1.08rem !important;
+    line-height:1.7 !important;
+  }
+}
+
+/* footer developer credit */
+.dev-credit{ opacity:.85; }
+.dev-credit a{ color:var(--gold); font-weight:600; text-decoration:none; }
+.dev-credit a:hover{ text-decoration:underline; }
